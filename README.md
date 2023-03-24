@@ -9,9 +9,9 @@ To solve the task, proceed as follows:
 3. Run `npm install` to instal all needed packages
 4. Make all necessary changes - write tests according to test case descriptions
 5. Confirm all changes with test run: `npm test` or `npx jest`
-8. Commit your changes and make a pull request for the original repo on GitHub
-9. Grade (2p) is awarded to students:
-   - who made the pull request with finished tests and validation code
+6. Commit your changes and make a pull request for the original repo on GitHub
+7. Grade (2p) is awarded to students:
+   - who made the pull request with finished tests
 
 ## Test cases
 
