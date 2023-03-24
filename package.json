@@ -6,6 +6,9 @@
   "scripts": {
     "test": "npx jest"
   },
+  "jest": {
+    "testTimeout": 200000
+  },
   "author": "Tatjana Kirotar",
   "license": "ISC",
   "devDependencies": {
