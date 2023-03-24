@@ -1,0 +1,16 @@
+{
+  "name": "seleniumjesttests",
+  "version": "1.0.0",
+  "description": "Testing Bookdepository webshop with Selenium and Jest tests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "author": "Tatjana Kirotar",
+  "license": "ISC",
+  "devDependencies": {
+    "chromedriver": "^111.0.0",
+    "jest": "^29.5.0",
+    "selenium-webdriver": "^4.8.1"
+  }
+}
