@@ -24,7 +24,7 @@ To solve the task, proceed as follows:
 |                                                        | Verify that products presented have searched keyword in it.                                      |
 |                                                        | Verify that found products can be sorted.                                                        |
 | Sort searched items by price                           | Verify that the products are sorted correctly.                                                   |
-|                                                        | Verify that products can be filtered by 5 categories: Age, Price, Availability, Language, Format |
+|                                                        | Verify that products can be filtered by 6 categories: Keyword, Age, Price, Availability, Language, Format |
 | Filter products by Format, select filter as “Hardback” | Verify that products list contains less items now.                                               |
 |                                                        | Verify that items selected have correct format.                                                  |
 
