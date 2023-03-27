@@ -47,10 +47,13 @@ describe("Search products from menu", () => {
       )
     );
     const actions = driver.actions({ bridge: true });
-    await actions
-      .move({ duration: 2000, origin: dropdownMenu, x: 0, y: 0 })
-      .perform();
+    await actions.move({ duration: 2000, origin: dropdownMenu, x: 0, y: 0 }).perform();
+      
+    checkForDropdown = await driver.findElement(By.css("body > div.page-slide > div.secondary-header-wrap > div > ul > li.tbd-dropdown.category-dropdown.mob-nav-shop.dropdown.open"))
+    expect(checkForDropdown).not.toBeNull()
+
   });
+
 
   test("Test Select Audio Books", async () => {
     const audioBooks = await driver
