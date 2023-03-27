@@ -1,4 +1,4 @@
-const { Builder, By } = require('selenium-webdriver')
+const {Builder, By} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 require('chromedriver')
 
@@ -12,17 +12,17 @@ describe('Search products', () => {
 
     beforeAll(async () => {
         driver = await new Builder()
-            .forBrowser('chrome')
-            // If you dont want to open browser, uncomment following row
-            .setChromeOptions(new chrome.Options().addArguments('--headless'))
-            .build()
-        driver.manage().setTimeouts({ implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT })
+        .forBrowser('chrome')
+        // If you dont want to open browser, uncomment following row
+        //.setChromeOptions(new chrome.Options().addArguments('--headless'))
+        .build()
+        driver.manage().setTimeouts({implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT})
         driver.manage().window().maximize()
 
         await driver.get('https://www.bookdepository.com/')
         await driver.findElement(By.css('div.cookie-consent > div.cookie-consent-buttons > button.btn.btn-sm.btn-yes')).click()
     })
-
+    
     afterAll(async () => {
         //await driver.quit()
     })
@@ -52,22 +52,22 @@ describe('Search products', () => {
         let itemFormats = await driver.findElements(By.css('div.item-info > h3.title'))
 
         //Verify that products presented have searched keyword in it.
-        for (let item of itemFormats) {
+        for(let item of itemFormats) {
             expect(await item.getText()).toContain('Summer')
         }
     })
-    test('Test add first book to cart', async () => {
+    test('Test add first book to cart', async () =>{
         await driver.findElement(By.css('div:nth-child(1) > div.item-actions > div > a')).click()
-        // проверка
+ // проверка
 
         let modalTitle = await driver.findElement(By.css('div.modal.fade.status-success.in > div > div > div.modal-header > h3')).getText()
-        expect(modalTitle).toContain('Item added to your basket')
+        expect(modalTitle).toContain('Item added to your basket')  
         //let modalTitle = await driver.findElement(By.css('div.modal-header > h3'))
         //expect(modalTitle).toContain('Item added to your basket')
-
+        
     })
-    test('Test add second book to cart', async () => {
-
+    test('Test add second book to cart', async () =>{
+        
         let leaveShopping = await driver.findElement(By.css(' div.basket-info > a.btn.btn-secondary.pull-left.continue-shopping.string-to-localize'))
         leaveShopping.click()
 
@@ -77,35 +77,35 @@ describe('Search products', () => {
 
         await driver.findElement(By.css('div:nth-child(2) > div.item-actions > div > a')).click()
         let modalTitle = await driver.findElement(By.css('div.modal.fade.status-success.in > div > div > div.modal-header > h3')).getText()
-        expect(modalTitle).toContain('Item added to your basket')
+        expect(modalTitle).toContain('Item added to your basket')  
         //await driver.findElement(By.className('btn btn-secondary pull-left continue-shopping string-to-localize')).click()
     })
-    test('Test Go to Basket/Checkout', async () => {
-
+    test('Test Go to Basket/Checkout', async () =>{
+    
 
         let basketCheck = await driver.findElement(By.css('div.basket-info > a.btn.btn-primary.pull-right.continue-to-basket.string-to-localize.link-to-localize'))
-            .click()
+        .click()
 
         let urBusket = await driver.findElement(By.css('div.page-slide > div.content-wrap > div.basket-page > h1')).getText()
-        expect(urBusket).toContain('Your basket')
-        // проверка
+        expect(urBusket).toContain('Your basket')  
+         // проверка
         //let modalTitle = await driver.findElement(By.css('div.modal-header > h3'))
         //expect(modalTitle).toContain('Item added to your basket')
         //await driver.findElement(By.className('btn btn-secondary pull-left continue-shopping string-to-localize')).click()
     })
-    test('Check number of books before', async () => {
-        // проверка
-        let numberOfBooks = await driver.findElement(By.css('div.page-slide > div.secondary-header-wrap > div > div > div.basket-wrap > a > span')).getText()
-        expect(numberOfBooks).toContain('2')
-
+    test('Check number of books before', async () =>{
+         // проверка
+         let numberOfBooks = await driver.findElement(By.css('div.page-slide > div.secondary-header-wrap > div > div > div.basket-wrap > a > span')).getText()
+        expect(numberOfBooks).toContain('2')  
+        
     })
-    test('Check number of books after removing', async () => {
-
+    test('Check number of books after removing', async () =>{
+        
         let basketCheck = await driver.findElement(By.css('body > div.page-slide > div.content-wrap > div.basket-page > div.grid-container > div.basket-items-wrap > div:nth-child(2) > div.item-checkout-info > form.remove-item > button'))
-            .click()
+        .click()
 
         let numberOfBooks = await driver.findElement(By.css('div.page-slide > div.secondary-header-wrap > div > div > div.basket-wrap > a > span')).getText()
-        expect(numberOfBooks).toContain('1')
+        expect(numberOfBooks).toContain('1')  
         // проверка
     })
 
