@@ -2,9 +2,9 @@ const {Builder, By} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 require('chromedriver')
 
+let HomePage = require('../pageobjects/homePage')
 
 const TIMEOUT = 50000
-let searchCountNum
 
 describe('Search products', () => {
 
@@ -14,13 +14,16 @@ describe('Search products', () => {
         driver = await new Builder()
         .forBrowser('chrome')
         // If you dont want to open browser, uncomment following row
-        //.setChromeOptions(new chrome.Options().addArguments('--headless'))
+        .setChromeOptions(new chrome.Options().addArguments('--headless'))
         .build()
         driver.manage().setTimeouts({implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT})
         driver.manage().window().maximize()
 
-        await driver.get('https://www.bookdepository.com/')
-        await driver.findElement(By.css('div.cookie-consent > div.cookie-consent-buttons > button.btn.btn-sm.btn-yes')).click()
+        HomePage = new HomePage(driver)
+
+        await HomePage.openUrl()
+        await HomePage.agreeWithCookies()
+        
     })
     
     afterAll(async () => {
@@ -29,86 +32,37 @@ describe('Search products', () => {
 
 
     test('Test Open Web Page', async () => {
-        //Verify that the web page has a Book Depository title.
-        const pageTitle = await driver.findElement(By.xpath('//h1/a[@class="brand-link"]/img')).getAttribute('alt')
-        expect(pageTitle).toContain('Bookdepository.com')
+        await HomePage.verifyPageTitleContains('Bookdepository.com')
     })
 
     test('Test Search by Keyword', async () => {
-        const searchField = await driver.findElement(By.css('#book-search-form > div > input[name="searchTerm"]'))
-        searchField.click()
-        searchField.sendKeys('Summer')
-        await driver.findElement(By.className('header-search-btn')).click()
 
-        const searchResultTitle = await driver.findElement(By.css('div.main-content.search-page > h1')).getText()
-        expect(searchResultTitle).toContain('Search results for Summer')
+        await HomePage.searchForText('Summer')
+        await HomePage.verifySearchResultText('Summer')
+        await HomePage.verifyAllSearchItemsContainText('Summer')
 
-        const searchCount = await driver.findElement(By.className('search-count')).getText()
-        searchCountNum = parseInt(searchCount.replace(',', ''))
-
-        //Verify that there are more than 1 products found.
-        expect(searchCountNum).toBeGreaterThan(1)
-
-        let itemFormats = await driver.findElements(By.css('div.item-info > h3.title'))
-
-        //Verify that products presented have searched keyword in it.
-        for(let item of itemFormats) {
-            expect(await item.getText()).toContain('Summer')
-        }
     })
-    test('Test add first book to cart', async () =>{
-        await driver.findElement(By.css('div:nth-child(1) > div.item-actions > div > a')).click()
- // проверка
 
-        let modalTitle = await driver.findElement(By.css('div.modal.fade.status-success.in > div > div > div.modal-header > h3')).getText()
-        expect(modalTitle).toContain('Item added to your basket')  
-        //let modalTitle = await driver.findElement(By.css('div.modal-header > h3'))
-        //expect(modalTitle).toContain('Item added to your basket')
-        
+    test('Test add first book to cart', async () => {
+        await HomePage.addFirstBook();
+        await HomePage.getAddedText('Item added to your basket')
     })
     test('Test add second book to cart', async () =>{
-        
-        let leaveShopping = await driver.findElement(By.css(' div.basket-info > a.btn.btn-secondary.pull-left.continue-shopping.string-to-localize'))
-        leaveShopping.click()
-
-        const searchResultTitle = await driver.findElement(By.css('div.main-content.search-page > h1')).getText()
-        expect(searchResultTitle).toContain('Search results for Summer')
-
-
-        await driver.findElement(By.css('div:nth-child(2) > div.item-actions > div > a')).click()
-        let modalTitle = await driver.findElement(By.css('div.modal.fade.status-success.in > div > div > div.modal-header > h3')).getText()
-        expect(modalTitle).toContain('Item added to your basket')  
-        //await driver.findElement(By.className('btn btn-secondary pull-left continue-shopping string-to-localize')).click()
+ 
+        await HomePage.leaveToSearch();
+        await HomePage.verifySearchResultText('Summer')
+        await HomePage.addSecondBook();
+        await HomePage.getAddedText('Item added to your basket')
     })
     test('Test Go to Basket/Checkout', async () =>{
-    
-
-        let basketCheck = await driver.findElement(By.css('div.basket-info > a.btn.btn-primary.pull-right.continue-to-basket.string-to-localize.link-to-localize'))
-        .click()
-
-        let urBusket = await driver.findElement(By.css('div.page-slide > div.content-wrap > div.basket-page > h1')).getText()
-        expect(urBusket).toContain('Your basket')  
-         // проверка
-        //let modalTitle = await driver.findElement(By.css('div.modal-header > h3'))
-        //expect(modalTitle).toContain('Item added to your basket')
-        //await driver.findElement(By.className('btn btn-secondary pull-left continue-shopping string-to-localize')).click()
+        await HomePage.clickToBasket();
+        await HomePage.getBasketText('Your basket');
     })
     test('Check number of books before', async () =>{
-         // проверка
-         let numberOfBooks = await driver.findElement(By.css('div.page-slide > div.secondary-header-wrap > div > div > div.basket-wrap > a > span')).getText()
-        expect(numberOfBooks).toContain('2')  
-        
+        await HomePage.getBusketElements('2')
     })
     test('Check number of books after removing', async () =>{
-        
-        let basketCheck = await driver.findElement(By.css('body > div.page-slide > div.content-wrap > div.basket-page > div.grid-container > div.basket-items-wrap > div:nth-child(2) > div.item-checkout-info > form.remove-item > button'))
-        .click()
-
-        let numberOfBooks = await driver.findElement(By.css('div.page-slide > div.secondary-header-wrap > div > div > div.basket-wrap > a > span')).getText()
-        expect(numberOfBooks).toContain('1')  
-        // проверка
+        await HomePage.deleteBusketElem('2')
+        await HomePage.getBusketElements('1')
     })
-
-
-
 })
