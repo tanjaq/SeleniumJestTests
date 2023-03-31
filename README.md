@@ -7,11 +7,11 @@ To solve the task, proceed as follows:
 1. Fork this repository on to your account
 2. Clone the forked repo to your computer using `git clone URL`
 3. Run `npm install` to instal all needed packages
-4. Make all necessary changes - write tests according to test case descriptions
+4. Make all necessary changes - refactor written tests to use Page Objects
 5. Confirm all changes with test run: `npm test` or `npx jest`
 6. Commit your changes and make a pull request for the original repo on GitHub
 7. Grade (2p) is awarded to students:
-   - who made the pull request with finished tests
+   - who made the pull request with tests using Page Object design pattern
 
 ## Test cases
 
