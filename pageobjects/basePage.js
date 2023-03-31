@@ -1,6 +1,7 @@
 const { until } = require("selenium-webdriver");
 const { addAttach } = require("jest-html-reporters/helper");
 const fs = require("fs");
+const path = require('path');
 
 const DEFAULT_TIMEOUT = 5000;
 const SCREENSHOT_FOLDER = "./screenshots/";
@@ -52,19 +53,20 @@ module.exports = class Page {
         return this.driver.wait(until.elementIsNotVisible(this.driver.findElement(element)), DEFAULT_TIMEOUT);
     }
 
-    async takeScreenShot(testName) {
+    async takeScreenShotIfTestFailed(state) {
+        if(state.assertionCalls != state.numPassingAsserts) {
+            let imageFileName = state.currentTestName + ".jpg";
 
-        let imageFileName = testName + ".jpg";
-
-        this.driver.takeScreenshot().then(
-            function(image) {
-                fs.writeFileSync(SCREENSHOT_FOLDER + imageFileName, image, 'base64');
-            }
-        )
-        await addAttach({
-            attach: fs.readFileSync(SCREENSHOT_FOLDER + imageFileName)
-          });
-
+            this.driver.takeScreenshot().then(
+                function(image) {
+                    fs.writeFileSync(SCREENSHOT_FOLDER + imageFileName, image, 'base64');
+                }
+            )
+            let imagePath = path.resolve(SCREENSHOT_FOLDER + imageFileName)
+            await addAttach({
+                attach: imagePath
+            });
+        }    
     }
 
     async getPageSource() {

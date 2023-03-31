@@ -4,7 +4,7 @@ require('chromedriver')
 
 let HomePage = require('../pageobjects/homePage')
 
-const TIMEOUT = 5000
+const TIMEOUT = 10000
 
 describe('Search products', () => {
 
@@ -30,7 +30,7 @@ describe('Search products', () => {
     })
 
     afterEach(function() {
-        HomePage.takeScreenShot(expect.getState().currentTestName)
+        HomePage.takeScreenShotIfTestFailed(expect.getState())
     })
     
     afterAll(async () => {
