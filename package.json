@@ -7,13 +7,18 @@
     "test": "npx jest"
   },
   "jest": {
-    "testTimeout": 200000
+    "testTimeout": 200000,
+    "reporters": [
+      "default",
+      "jest-html-reporters"
+    ]
   },
   "author": "Tatjana Kirotar",
   "license": "ISC",
   "devDependencies": {
     "chromedriver": "^111.0.0",
     "jest": "^29.5.0",
+    "jest-html-reporters": "^3.1.4",
     "selenium-webdriver": "^4.8.1"
   }
 }

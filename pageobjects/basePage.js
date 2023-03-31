@@ -1,6 +1,9 @@
 const { until } = require("selenium-webdriver");
+const { addAttach } = require("jest-html-reporters/helper");
+const fs = require("fs");
 
-const DEFAULT_TIMEOUT = 15000;
+const DEFAULT_TIMEOUT = 5000;
+const SCREENSHOT_FOLDER = "./screenshots/";
 let driver;
 
 //parent page, has functions that all pages could use
@@ -47,6 +50,30 @@ module.exports = class Page {
     waitForElementNotVisible(element) {
         this.driver.wait(until.elementLocated(element), DEFAULT_TIMEOUT);
         return this.driver.wait(until.elementIsNotVisible(this.driver.findElement(element)), DEFAULT_TIMEOUT);
+    }
+
+    async takeScreenShot(testName) {
+
+        let imageFileName = testName + ".jpg";
+
+        this.driver.takeScreenshot().then(
+            function(image) {
+                fs.writeFileSync(SCREENSHOT_FOLDER + imageFileName, image, 'base64');
+            }
+        )
+        await addAttach({
+            attach: fs.readFileSync(SCREENSHOT_FOLDER + imageFileName)
+          });
+
+    }
+
+    async getPageSource() {
+        //TODO get pageSource and add it to test report
+        //Hint: driver has a function for getting page source
+    }
+
+    emptyScreenshotFolder() {
+        //TODO clean screenshots folder before all tests
     }
 
 }
