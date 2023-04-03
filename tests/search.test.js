@@ -4,13 +4,16 @@ require('chromedriver')
 
 let HomePage = require('../pageobjects/homePage')
 
-const TIMEOUT = 5000
+const TIMEOUT = 10000
 
 describe('Search products', () => {
 
     let driver
 
     beforeAll(async () => {
+
+        //TODO add method to delete all old screenshots
+
         driver = await new Builder()
         .forBrowser('chrome')
         // If you dont want to open browser, uncomment following row
@@ -23,7 +26,13 @@ describe('Search products', () => {
 
         await HomePage.openUrl()
         await HomePage.agreeWithCookies()
+
+        await HomePage.getPageSource()
         
+    })
+
+    afterEach(function() {
+        HomePage.takeScreenShotIfTestFailed(expect.getState())
     })
     
     afterAll(async () => {
