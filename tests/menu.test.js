@@ -2,7 +2,7 @@ const { Builder, By, Actions } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 
 require("chromedriver");
-let HomePage = require("../pageobjects/HomePage");
+let HomePage = require("../pageobjects/homePage");
 const TIMEOUT = 5000;
 let searchCountNum;
 let searchCountNum2;

@@ -1,6 +1,10 @@
-const { until } = require("selenium-webdriver");
+const { until, By} = require("selenium-webdriver");
+const { addAttach } = require("jest-html-reporters/helper");
+const fs = require("fs");
+const path = require('path');
 
-const DEFAULT_TIMEOUT = 15000;
+const DEFAULT_TIMEOUT = 5000;
+const SCREENSHOT_FOLDER = "./screenshots/";
 let driver;
 
 //parent page, has functions that all pages could use
@@ -48,5 +52,37 @@ module.exports = class Page {
         this.driver.wait(until.elementLocated(element), DEFAULT_TIMEOUT);
         return this.driver.wait(until.elementIsNotVisible(this.driver.findElement(element)), DEFAULT_TIMEOUT);
     }
+    
+    async takeScreenShotIfTestFailed(state) {
+        if (!fs.existsSync(SCREENSHOT_FOLDER)){
+            fs.mkdirSync(SCREENSHOT_FOLDER);
+        }
 
+        if(state.assertionCalls != state.numPassingAsserts) {
+            let imageFileName = state.currentTestName + ".jpg";
+
+            this.driver.takeScreenshot().then(
+                function(image) {
+                    fs.writeFileSync(SCREENSHOT_FOLDER + imageFileName, image, 'base64');
+                }
+            )
+            let imagePath = path.resolve(SCREENSHOT_FOLDER + imageFileName)
+            await addAttach({
+                attach: imagePath
+            });
+        }    
+    }
+    async getPageSource() {
+
+        //TODO get pageSource and add it to test report
+        
+        //Hint: driver has a function for getting page source 
+        let pageSource= await this.driver.findElement(By.tagName("body")).getText();
+        fs.writeFileSync('pageSource.txt', pageSource);
+        console.log(__dirname)
+        let txtPath = path.resolve('pageSource.txt')
+        await addAttach({
+        attach: txtPath
+        });
+        }
 }

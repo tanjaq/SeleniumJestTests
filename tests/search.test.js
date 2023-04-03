@@ -23,9 +23,13 @@ describe('Search products', () => {
 
         await HomePage.openUrl()
         await HomePage.agreeWithCookies()
-        
+        await HomePage.getPageSource()
     })
     
+    afterEach(function() {
+        HomePage.takeScreenShotIfTestFailed(expect.getState())
+    })
+
     afterAll(async () => {
         await driver.quit()
     })
