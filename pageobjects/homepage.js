@@ -109,5 +109,4 @@ module.exports = class HomePage extends Page {
 
         expect(searchCountFilteredNum).toBeLessThan(searchCountNum)
     }
-
 }
