@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require('path');
 
 const DEFAULT_TIMEOUT = 5000;
-const SCREENSHOT_FOLDER = "./screenshots/";
+const SCREENSHOT_FOLDER = "./source";
 let driver;
 
 //parent page, has functions that all pages could use

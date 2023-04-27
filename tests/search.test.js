@@ -39,7 +39,7 @@ describe('Search products', () => {
 
 
     test('Test Open Web Page', async () => {
-        await HomePage.verifyPageTitleContains('Bookdepository.com')
+        await HomePage.verifyPageTitleContains('abebooks.com')
     })
 
     test('Test Search by Keyword', async () => {
