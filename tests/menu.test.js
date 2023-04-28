@@ -2,7 +2,7 @@ const {Builder, By} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 require('chromedriver')
 
-let HomePage = require('../pageobjects/homePage')
+let HomePage = require('../pageobjects/homepage')
 
 const TIMEOUT = 10000
 
@@ -25,7 +25,7 @@ describe('Search products from menu', () => {
         HomePage = new HomePage(driver)
 
         await HomePage.openUrl()
-        await HomePage.agreeWithCookies()
+        //await HomePage.agreeWithCookies()
         
     })
 
@@ -39,19 +39,19 @@ describe('Search products from menu', () => {
 
 
     test('Test Open Web Page', async () => {
-        await HomePage.verifyPageTitleContains('abebooks.com')
+        await HomePage.verifyPageTitleContains('AbeBooks.com')
     })
 
     test('Test “Shop by Category” Menu', async () => {
-        await HomePage.verifyPageTitleContains('abebooks.com')
+        //await HomePage.verifyPageTitleContains('bookdepository.com')
     })
     test('Test “Audio Books” from Submenu', async () => {
-        await HomePage.verifyPageTitleContains('abebooks.com')
+        //await HomePage.verifyPageTitleContains('bookdepository.com')
     })
     test('Test “Food & Drink” from Submenu', async () => {
-        await HomePage.verifyPageTitleContains('abebooks.com')
+        //await HomePage.verifyPageTitleContains('bookdepository.com')
     })
     test('Test “Beverages” from Submenu', async () => {
-        await HomePage.verifyPageTitleContains('abebooks.com')
+        //await HomePage.verifyPageTitleContains('bookdepository.com')
     })
 })

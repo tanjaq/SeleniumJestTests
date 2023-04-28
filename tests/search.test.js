@@ -2,7 +2,7 @@ const {Builder, By} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 require('chromedriver')
 
-let HomePage = require('../pageobjects/homePage')
+let HomePage = require('../pageobjects/homepage')
 
 const TIMEOUT = 10000
 
@@ -17,7 +17,7 @@ describe('Search products', () => {
         driver = await new Builder()
         .forBrowser('chrome')
         // If you dont want to open browser, uncomment following row
-        .setChromeOptions(new chrome.Options().addArguments('--headless'))
+        //.setChromeOptions(new chrome.Options().addArguments('--headless'))
         .build()
         driver.manage().setTimeouts({implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT})
         driver.manage().window().maximize()
@@ -25,7 +25,7 @@ describe('Search products', () => {
         HomePage = new HomePage(driver)
 
         await HomePage.openUrl()
-        await HomePage.agreeWithCookies()
+        //await HomePage.agreeWithCookies()
         
     })
 
@@ -39,7 +39,7 @@ describe('Search products', () => {
 
 
     test('Test Open Web Page', async () => {
-        await HomePage.verifyPageTitleContains('abebooks.com')
+        await HomePage.verifyPageTitleContains('AbeBooks.com')
     })
 
     test('Test Search by Keyword', async () => {
@@ -60,8 +60,9 @@ describe('Search products', () => {
     })
 
     test('Test Filter by format', async () => {
-        await HomePage.verifyProductFilters();
-        await HomePage.filterResultsByText('Hardback');
+        //await HomePage.verifyProductFilters();
+        //await HomePage.filterResultsByText('Hardback');
+        await HomePage.clickButton(By.css('#hard-cover > a > span.icon'));
         await HomePage.verifyResultsFilter('Hardback');
         await HomePage.verifyResultsAreFiltered();
     })

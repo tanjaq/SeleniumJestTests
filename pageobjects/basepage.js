@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require('path');
 
 const DEFAULT_TIMEOUT = 5000;
-const SCREENSHOT_FOLDER = "./source";
+const SCREENSHOT_FOLDER = "./screenshots";
 let driver;
 
 //parent page, has functions that all pages could use
@@ -76,6 +76,7 @@ module.exports = class Page {
 
     emptyScreenshotFolder() {
         //TODO clean screenshots folder before all tests
+        //imagePath = path.resolve(SCREENSHOT_FOLDER + imageFileName)
     }
 
 }

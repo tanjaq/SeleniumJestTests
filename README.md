@@ -1,5 +1,5 @@
 # Selenium & Jest test automation - Webshop
-The task is to add tests to abebooks.com webpage following the test cases.
+The task is to add tests to bookdepository.com webpage following the test cases.
 
 ## How to get the project
 
@@ -19,7 +19,7 @@ To solve the task, proceed as follows:
 
 | Steps                                                  | Expected result (assertions)                                                                     |
 |--------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| Open abebooks.com webpage                        | Verify that the web page has a Book Depository title.                                            |
+| Open bookdepository.com webpage                        | Verify that the web page has a Book Depository title.                                            |
 | Search for keyword “harry potter”                      | Verify that there are more than 1 products found.                                                |
 |                                                        | Verify that products presented have searched keyword in it.                                      |
 |                                                        | Verify that found products can be sorted.                                                        |
@@ -32,7 +32,7 @@ To solve the task, proceed as follows:
 
 | Steps                                   | Expected result (assertions)                                         |
 |-----------------------------------------|----------------------------------------------------------------------|
-| Open abebooks.com webpage         | Verify that the web page has a Book Depository title.                |
+| Open bookdepository.com webpage         | Verify that the web page has a Book Depository title.                |
 | Search for any product keyword          | Verify that there are more than 1 products found.                    |
 |                                         | Verify that products can be added to cart.                           |
 | Add 1 item to cart.                     | Verify that notification about product being added to cart is shown. |
@@ -46,7 +46,7 @@ To solve the task, proceed as follows:
 
 | Steps                              | Expected result (assertions)                              |
 |------------------------------------|-----------------------------------------------------------|
-| Open abebooks.com webpage    | Verify that the web page has a Book Depository title.     |
+| Open bookdepository.com webpage    | Verify that the web page has a Book Depository title.     |
 | Click on “Shop by Category” menu   | Verify that submenu page is opened.                       |
 | Select “Audio Books” from submenu  | Verify Audio Books page is opened.                        |
 | Select “Food & Drink” from submenu | Verify that there are more than 1 products found.         |

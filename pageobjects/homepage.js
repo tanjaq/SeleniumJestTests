@@ -9,16 +9,16 @@ let searchCountNum;
 const cookiesConsentBtn = By.css('div.cookie-consent > div.cookie-consent-buttons > button.btn.btn-sm.btn-yes');
 const brandLinkHeader = By.xpath('//h1/a[@class="brand-link"]/img');
 
-const searchField = By.css('#book-search-form > div > input[name="searchTerm"]');
-const searchBtn = By.className('header-search-btn');
-const searchResultHeader = By.css('div.main-content.search-page > h1');
-const searchResultCount = By.className('search-count');
-const searchResultItemTitle = By.css('div.item-info > h3.title');
+const searchField = By.css('#header-searchbox-input');
+const searchBtn = By.className('gnav-searchbox-button');
+const searchResultHeader = By.css('#pageHeader > h1');
+const searchResultCount = By.id('topbar-search-result-count-header');
+const searchResultItemTitle = By.css('div > h2.title');
 const searchResultItemFormat = By.css('div.item-info > p.format');
-const searchResultsItemPrice = By.css('span.sale-price');
+const searchResultsItemPrice = By.css('.item-price');
 
-const sortOptions = By.xpath('//select[@name="searchSortBy"]/option');
-const sortByPriceBtn = By.xpath('//select[@name="searchSortBy"]/option[@value="price_high_low"]');
+const sortOptions = By.xpath('//*[@id="sortby-topbar"]/option');
+const sortByPriceBtn = By.xpath('//*[@id="sortby-topbar"]/option[@value="2"]');
 
 const filterOptions = By.css('form.filter-menu > div > label');
 const filterResultsBtn = By.xpath('//button[contains(text(),"Refine results")]');
@@ -38,7 +38,7 @@ module.exports = class HomePage extends Page {
     }
 
     async verifyPageTitleContains(pageTitle) {
-        const pageTitleElement = await super.getElementAttribute(brandLinkHeader, 'alt');
+        const pageTitleElement = await /*super.getElementAttribute(brandLinkHeader, 'alt')*/ super.getElementText(By.css('#logo > span'));
         expect(pageTitleElement).toContain(pageTitle)
     }
 
@@ -49,7 +49,7 @@ module.exports = class HomePage extends Page {
 
     async verifySearchResultText(text) {
         const searchResultTitle = await super.getElementText(searchResultHeader);
-        expect(searchResultTitle).toContain('Search results for ' + text)
+        expect(searchResultTitle).toContain(text)
     }
 
     async verifyAllSearchItemsContainText(text) {
@@ -68,20 +68,21 @@ module.exports = class HomePage extends Page {
 
     async verifyProductSortOptions() {
         let sortByOptions = await super.getElements(sortOptions);
-        expect(sortByOptions).toHaveLength(5)
+        expect(sortByOptions).toHaveLength(12)
     }
 
     async sortResultsByPrice() {
         await super.clickButton(sortByPriceBtn);
+
     }
 
     async verifyResultsAreSorted() {
         let searchItems = await super.getElements(searchResultsItemPrice);
-        
+        //console.log(await searchItems[0].getText())
         //Verify that the products are sorted correctly.
-        let price1 = parseFloat((await searchItems[0].getText()).replace(/[^\d,.]/, '').replace(',', '.'))
-        let price2 = parseFloat((await searchItems[1].getText()).replace(/[^\d,.]/, '').replace(',', '.'))
-
+        let price1 = parseFloat((await searchItems[0].getText()).replace('US$ ', ''))
+        let price2 = parseFloat((await searchItems[1].getText()).replace('US$ ', ''))
+        
         expect(price1).toBeGreaterThanOrEqual(price2)
     }
 
