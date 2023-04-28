@@ -17,7 +17,7 @@ describe('Search products from menu', () => {
         driver = await new Builder()
         .forBrowser('chrome')
         // If you dont want to open browser, uncomment following row
-        .setChromeOptions(new chrome.Options().addArguments('--headless'))
+        //.setChromeOptions(new chrome.Options().addArguments('--headless'))
         .build()
         driver.manage().setTimeouts({implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT})
         driver.manage().window().maximize()
@@ -43,9 +43,10 @@ describe('Search products from menu', () => {
     })
 
     test('Test “Shop by Category” Menu', async () => {
-        //await HomePage.verifyPageTitleContains('bookdepository.com')
+        await HomePage.browseCollections()
+        await HomePage.verifyBrowseText('Browse Collections')
     })
-    test('Test “Audio Books” from Submenu', async () => {
+    test('Test “Comic Books” from Submenu', async () => {
         //await HomePage.verifyPageTitleContains('bookdepository.com')
     })
     test('Test “Food & Drink” from Submenu', async () => {

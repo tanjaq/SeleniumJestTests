@@ -23,6 +23,9 @@ const sortByPriceBtn = By.xpath('//*[@id="sortby-topbar"]/option[@value="2"]');
 const filterOptions = By.css('form.filter-menu > div > label');
 const filterResultsBtn = By.xpath('//button[contains(text(),"Refine results")]');
 
+const moveToColletions = By.className('collections-link');
+const moveToVerify = By.className('banner-heading');//**********className менять */
+
 module.exports = class HomePage extends Page {
     constructor(driver) {
         super(driver);
@@ -73,7 +76,6 @@ module.exports = class HomePage extends Page {
 
     async sortResultsByPrice() {
         await super.clickButton(sortByPriceBtn);
-
     }
 
     async verifyResultsAreSorted() {
@@ -109,5 +111,14 @@ module.exports = class HomePage extends Page {
         const searchCountFilteredNum = parseInt(searchCountFiltered.replace(',', ''))
 
         expect(searchCountFilteredNum).toBeLessThan(searchCountNum)
+    }
+
+    async browseCollections() {
+        await super.clickButton(moveToColletions);
+    }
+
+    async verifyBrowseText() {
+        const searchResultTitle = await super.getElementText(moveToVerify);
+        expect(searchResultTitle).toContain(text)
     }
 }
